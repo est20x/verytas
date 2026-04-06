@@ -26,8 +26,9 @@ ${userAnswersText}
     `;
 
     // ✅ Відправка в Telegram
-    const token = "8702313207:AAF5syokhG1D_8s2mX117z600j_hZi53DfU";
-    const chat_id = "-1003821809756";
+    const token = "8748099842:AAGBP48aAP4RGuT1M5dWwEgFMZQJ53chW1k";
+    const chat_id = "-1003854387081";
+
     const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(
       message
     )}`;
@@ -43,14 +44,14 @@ ${userAnswersText}
     );
 
     // ✅ Відправка в Google Таблицю
-    const googleScriptUrl = "";
-// https://script.google.com/macros/s/AKfycbzKstlTcGD0NvGvLxRysKTn9MPsuaIv5imlObXXLZWRu5RbvxqM_s5chZrk7ue-0LM/exec
+    // 👇 Вставте URL після деплою Apps Script (інструкція — дивіться Code.gs)
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwF4DZMifjNSxIDu0I-P77xAQ6OJLB_csmMMBBdoF01hMGlf966O5gHQQ2Gsx6bq8Ta/exec";
+
     const sheetRes = await fetch(googleScriptUrl, {
       method: "POST",
       body: JSON.stringify({
         name,
-        email,
-        whatsapp: phone,
+        phone,
         answers: answersArray,
       }),
       headers: {
