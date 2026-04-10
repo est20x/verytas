@@ -1,6 +1,6 @@
 export type FormDataType = {
   name: string;
-  // email: string;
+  email: string;// email: string;
   phone: string;
 };
 
