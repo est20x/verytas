@@ -9,7 +9,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Все поля должны быть заполнены!" }, { status: 400 });
     }
 
-    // Формуємо текст для Telegram
+    // ✅ Формуємо текст для Telegram
     const userAnswersText = answers
       .map((answer: { question: string; option: string }, index: number) => {
         return `${index + 1}. ${answer.question}\nОтвет: ${answer.option}`;
@@ -22,13 +22,13 @@ export async function POST(request: Request) {
 ☎️ Телефон: ${phone}
 
 👇 Ответы на вопросы:
-
 ${userAnswersText}
     `;
 
-    // Відправка в Telegram
-    const token = "8702313207:AAF5syokhG1D_8s2mX117z600j_hZi53DfU";
-    const chat_id = "-1003821809756";
+    // ✅ Відправка в Telegram
+    const token = "8748099842:AAGBP48aAP4RGuT1M5dWwEgFMZQJ53chW1k";
+    const chat_id = "-1003854387081";
+
     const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(
       message
     )}`;
@@ -38,16 +38,21 @@ ${userAnswersText}
       throw new Error("Не удалось отправить сообщение в Telegram");
     }
 
-    // Відправка в Google Таблицю — передаємо повні об'єкти {question, option}
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbw_eCoJ7BlCrCqCDsFtMdxx8QhA-JdhsD9Hcm9JGAuTVrbYTDvXJvO-SgKHk1V2QUV3/exec";
+    // ✅ Формуємо масив відповідей для Google Таблиці
+    const answersArray = answers.map(
+      (answer: { question: string; option: string }) => answer.option
+    );
+
+    // ✅ Відправка в Google Таблицю
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwWG9R6U0A_UqZm-W01vVi0kcyPQItqNqC7VBr9w8H3RJz6he9hNTWeFJwnX-fG6eO4/exec";
 
     const sheetRes = await fetch(googleScriptUrl, {
       method: "POST",
       body: JSON.stringify({
         name,
         email,
-        whatsapp: phone,
-        answers, // повні об'єкти {question, option}
+        phone,
+        answers: answersArray,
       }),
       headers: {
         "Content-Type": "application/json",
