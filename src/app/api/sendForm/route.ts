@@ -18,6 +18,7 @@ export async function POST(request: Request) {
 
     const message = `
 🇪🇺 Имя: ${name}
+📧 Email: ${email}
 ☎️ Телефон: ${phone}
 
 👇 Ответы на вопросы:
