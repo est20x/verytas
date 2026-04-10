@@ -46,7 +46,7 @@ ${userAnswersText}
 
     // ✅ Відправка в Google Таблицю
     // 👇 Вставте URL після деплою Apps Script (інструкція — дивіться Code.gs)
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycby9Hnbghx1LkIHAXEFeVf6WCl3EUeEtm5J5IoMYuIihpp0cKlzer6InFDZY6X0Pc4Bs/exec";
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbw_eCoJ7BlCrCqCDsFtMdxx8QhA-JdhsD9Hcm9JGAuTVrbYTDvXJvO-SgKHk1V2QUV3/exec";
 
     const sheetRes = await fetch(googleScriptUrl, {
       method: "POST",
