@@ -33,6 +33,6 @@ export const sections = [
 
 export const formFields: { label: string; name: keyof FormDataType; type: string; placeholder: string; required?: boolean }[] = [
   { label: "Ваше имя:", name: "name", type: "text", placeholder: "Введите свое имя", required: true },
-
+ { label: "Ваш email:", name: "email", type: "email", placeholder: "Введите свой email", required: true },
   { label: "Ваш номер телефона для связи:", name: "phone", type: "tel", placeholder: "Введите свой номер телефона", required: false },
 ];
