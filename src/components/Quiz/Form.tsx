@@ -10,8 +10,8 @@ import { motion } from 'framer-motion';
 import { ThankYouSlide } from './ThankYouSlide';
 
 export const Form: React.FC<FormProps> = ({ onSubmit, onBack }) => {
-  const [formData, setFormData] = useState<FormDataType>({ name: '', phone: '' });
-  const [countryCode, setCountryCode] = useState('ua'); 
+  const [formData, setFormData] = useState<FormDataType>({ name: '', email: '', phone: '' });
+  const [countryCode, setCountryCode] = useState('ua');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
   const [justSubmitted, setJustSubmitted] = useState(false);
@@ -21,7 +21,7 @@ export const Form: React.FC<FormProps> = ({ onSubmit, onBack }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.country_code) {
-          setCountryCode(data.country_code.toLowerCase()); 
+          setCountryCode(data.country_code.toLowerCase());
         }
       })
       .catch(() => console.error('Не удалось определить страну'));
@@ -40,7 +40,10 @@ export const Form: React.FC<FormProps> = ({ onSubmit, onBack }) => {
     let valid = true;
     let newErrors: { email?: string; phone?: string } = {};
 
-   
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Некоректний email';
+      valid = false;
+    }
 
     if (!/^\d{10,}$/.test(formData.phone)) {
       newErrors.phone = 'Некоректний номер телефону';
@@ -86,8 +89,8 @@ export const Form: React.FC<FormProps> = ({ onSubmit, onBack }) => {
       </p>
 
       {formFields.map((field) => (
-        <div key={field.name} className="w-full mb-4 ">
-          <label className="block text-sm  lg:text-lg font-helvetica font-semibold mb-2">{field.label}</label>
+        <div key={field.name} className="w-full mb-4">
+          <label className="block text-sm lg:text-lg font-helvetica font-semibold mb-2">{field.label}</label>
           {field.name === 'phone' ? (
             <>
               <PhoneInput
@@ -98,7 +101,7 @@ export const Form: React.FC<FormProps> = ({ onSubmit, onBack }) => {
                 buttonClass="bg-white border border-gray-300"
                 containerClass="w-full"
               />
-              {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+              {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
             </>
           ) : (
             <>
@@ -111,7 +114,9 @@ export const Form: React.FC<FormProps> = ({ onSubmit, onBack }) => {
                 className="w-full border focus:border-morange focus:outline-none border-gray-300 p-3 lg:p-4 rounded-3xl text-xs lg:text-base"
                 required
               />
-              
+              {field.name === 'email' && errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </>
           )}
         </div>
